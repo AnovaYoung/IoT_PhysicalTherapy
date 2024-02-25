@@ -22,26 +22,33 @@ The CNN architecture is composed of convolutional layers for feature extraction,
 
 **Training and Validation**
 The model was trained on 60% of the data, validated on 20%, and tested on the remaining 20%. It was evaluated based on accuracy, with plans to include a comprehensive analysis of precision, recall, and F1 scores for detailed performance metrics.
+**
+3. Anomaly Detection Model**
 
-**2. Time Series Prediction Model**
+The second model in this project is focused on identifying anomalous behavior within sensor data using an Isolation Forest.
 
-The second model in this project focuses on predicting future sensor readings based on historical data. Using a Long Short-Term Memory (LSTM) network, a variant of Recurrent Neural Networks (RNNs) known for its effectiveness in sequential data, the model aims to forecast the sensor data for subsequent time steps.
+### Isolation Forest Model Setup
 
-**LSTM Model Setup**
-Data Structuring: The LSTM model requires data in a sequence format, where each input sequence is used to predict the next value in the time series.
-Feature Engineering: The time series data were processed to extract meaningful features and structure them into sequences that serve as inputs to the LSTM network.
-LSTM Architecture
-The LSTM model comprises LSTM layers that process the input sequences, followed by dense layers that output the predicted future sensor readings.
+- **Data Structuring**: Unlike models that require sequential data, the Isolation Forest algorithm works with unstructured data, analyzing each data point independently to determine its "anomalousness."
+  
+- **Feature Engineering**: Advanced approach to feature engineering was undertaken to enhance the model's ability to identify anomalous behavior within sensor data. Synthetic anomaly labels were crafted for each sensor reading and anomalies were synthetically labeled based on deviations from the norm. For each sensor axis, data points were marked as anomalies if they fell beyond a predefined threshold.
 
-**Training and Evaluation**
-The LSTM model was trained to minimize the mean squared error between its predictions and the actual future sensor readings. Evaluation involved assessing the model's ability to accurately forecast unseen data, measuring performance with metrics suitable for regression tasks, such as Mean Absolute Error (MAE) and Root Mean Squared Error (RMSE).
+### Isolation Forest Architecture
+
+- The Isolation Forest model consists of numerous decision trees that isolate observations by randomly selecting a feature and then randomly selecting a split value between the maximum and minimum values of the selected feature. Anomalies are those observations that have short paths on these trees, indicating they are easier to isolate from the rest of the data.
+
+### Training and Evaluation
+
+- The Isolation Forest model was configured to estimate the level of contamination (proportion of outliers) in the dataset automatically. It was trained using the sensor data, with the goal of minimizing the false positive rate while maximizing the detection of true anomalies.
+  
+- **Evaluation**: The performance was assessed qualitatively in the absence of labeled data, through visual inspections. For quantitative analysis, synthetic anomaly labels were created based on statistical thresholds to measure the model's precision, recall, F1-score, and to plot Precision-Recall curves.
+
+This anomaly detection approach allows for the efficient identification of outliers within the sensor data, providing valuable insights into potential issues or abnormal conditions without the need for pre-labeled training data.
 
 **Results and Insights**
 
 The CNN classifier demonstrated a promising ability to differentiate between exercise types with an accuracy that improved across training epochs, suggesting that the model was learning meaningful patterns from the sensor data.
-The LSTM predictor offered valuable forecasts of future sensor readings, with performance indicating the model's potential as a predictive tool in physical therapy settings.
-Future Directions
-
+ 
 **Model Optimization:** 
 
 Both models will undergo further tuning, including hyperparameter optimization, regularization, and potentially exploring alternative architectures to enhance performance.
